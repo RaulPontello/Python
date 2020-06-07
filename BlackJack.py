@@ -183,18 +183,3 @@ while True:
 
             if game_over == True:
                 break
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
