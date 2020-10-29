@@ -1,0 +1,80 @@
+## Statistics ##
+# Objective: given a list of numbers, determine mean, mode, stardard deviation,...
+# Python's built-in functions cannot be used
+
+# 1) Input
+
+L = [23,33,26,26,28,29,30,31,24]
+
+# 2) Output
+
+# 2.1) Initial calculations
+
+S = 0  # Sum of all elements in the list
+Sh = 0  # Sum of all inverted elements in the list
+P = 1  # Product of all elements in the list
+
+for i in range(0, len(L)):
+    S += L[i]
+    Sh += (1 / L[i])
+    P *= L[i]
+
+# 2.2) Arithimetic mean
+
+Ma = S / len(L)
+
+# 2.3) Harmonic mean
+
+Mh = len(L) / Sh
+
+# 2.4) Geometric mean
+
+Mg = pow(P, 1 / len(L))
+
+# 2.5) Mode
+
+mode = max(set(L), key = L.count)
+
+# 2.6) Median
+
+median = 0
+
+if len(L) % 2 != 0:
+    median = sorted(L)[len(L) // 2]
+
+elif len(L) % 2 == 0:
+    L_inf = sorted(L)[0 : len(L) // 2]
+    L_sup = sorted(L)[len(L) // 2 : len(L)]
+    median = 0.5 * (L_inf[len(L_inf) - 1] + L_sup[0])
+
+# 2.7) Variance
+
+S2 = 0
+
+for num in L:
+    S2 += pow((num - Ma), 2)
+
+population_var = S2 / len(L)
+sample_var = S2 / (len(L) - 1)
+
+# 2.8) Standard deviation
+
+population_std = pow(population_var, 0.5)
+sample_std = pow(sample_var, 0.5)
+
+# 2.9) Coefficient of variation
+
+c = population_var / Ma
+
+# 3) Results
+
+print('Arithimetic mean: ', round(Ma, 3))
+print('Harmonic mean: ', round(Mh, 3))
+print('Geometric mean: ', round(Mg, 3))
+print('Mode: ', mode)
+print('Median: ', median)
+print('Population variance: ', round(population_var, 3))
+print('Sample variance: ', round(sample_var, 3))
+print('Population standard deviation: ', round(population_std, 3))
+print('Sample standard deviation: ', round(sample_std, 3))
+print('Coefficient of variation: ', round(c, 3))
