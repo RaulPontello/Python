@@ -1,80 +1,80 @@
 ## Statistics ##
 # Objective: given a list of numbers, determine mean, mode, stardard deviation,...
-# Python's built-in functions cannot be used
+# Python's built in functions cannot be used to determine statistics
 
 # 1) Input
 
-L = [23,33,26,26,28,29,30,31,24]
+initialList = [23,33,26,26,28,29,30,31,24]
 
 # 2) Output
 
 # 2.1) Initial calculations
 
-S = 0  # Sum of all elements in the list
-Sh = 0  # Sum of all inverted elements in the list
-P = 1  # Product of all elements in the list
+sumOfAllElements = 0
+sumOfAllElementsInverted = 0
+productOfAllElements = 1
 
-for i in range(0, len(L)):
-    S += L[i]
-    Sh += (1 / L[i])
-    P *= L[i]
+for i in range(0, len(initialList)):
+    sumOfAllElements += initialList[i]
+    sumOfAllElementsInverted += (1 / initialList[i])
+    productOfAllElements *= initialList[i]
 
 # 2.2) Arithimetic mean
 
-Ma = S / len(L)
+arithimeticMean = sumOfAllElements / len(initialList)
 
 # 2.3) Harmonic mean
 
-Mh = len(L) / Sh
+harmonicMean = len(initialList) / sumOfAllElementsInverted
 
 # 2.4) Geometric mean
 
-Mg = pow(P, 1 / len(L))
+geometricMean = pow(productOfAllElements, 1 / len(initialList))
 
 # 2.5) Mode
 
-mode = max(set(L), key = L.count)
+mode = max(set(initialList), key = initialList.count)
 
 # 2.6) Median
 
 median = 0
 
-if len(L) % 2 != 0:
-    median = sorted(L)[len(L) // 2]
+if len(initialList) % 2 != 0:
+    median = sorted(initialList)[len(initialList) // 2]
 
-elif len(L) % 2 == 0:
-    L_inf = sorted(L)[0 : len(L) // 2]
-    L_sup = sorted(L)[len(L) // 2 : len(L)]
-    median = 0.5 * (L_inf[len(L_inf) - 1] + L_sup[0])
+elif len(initialList) % 2 == 0:
+    initialList_inf = sorted(initialList)[0 : len(initialList) // 2]
+    initialList_sup = sorted(initialList)[len(initialList) // 2 : len(initialList)]
+    median = 0.5 * (initialList_inf[len(initialList_inf) - 1] + initialList_sup[0])
 
 # 2.7) Variance
 
-S2 = 0
+averageAbsoluteDeviation = 0
 
-for num in L:
-    S2 += pow((num - Ma), 2)
+for num in initialList:
+    averageAbsoluteDeviation += pow((num - arithimeticMean), 2)
 
-population_var = S2 / len(L)
-sample_var = S2 / (len(L) - 1)
+populationVariance = averageAbsoluteDeviation / len(initialList)
+sampleVariance = averageAbsoluteDeviation / (len(initialList) - 1)
 
 # 2.8) Standard deviation
 
-population_std = pow(population_var, 0.5)
-sample_std = pow(sample_var, 0.5)
+populationStardardDeviation = pow(populationVariance, 0.5)
+sampleStardardDeviation = pow(sampleVariance, 0.5)
 
 # 2.9) Coefficient of variation
 
-c = population_var / Ma
+coefficientOfVariation = populationVariance / arithimeticMean
 
 # 3) Results
 
-print('Arithimetic mean: ', round(Ma, 3))
-print('Harmonic mean: ', round(Mh, 3))
-print('Geometric mean: ', round(Mg, 3))
+print('Arithimetic mean: ', round(arithimeticMean, 3))
+print('Harmonic mean: ', round(harmonicMean, 3))
+print('Geometric mean: ', round(geometricMean, 3))
 print('Mode: ', mode)
 print('Median: ', median)
-print('Population variance: ', round(population_var, 3))
-print('Sample variance: ', round(sample_var, 3))
-print('Population standard deviation: ', round(population_std, 3))
-print('Sample standard deviation: ', round(sample_std, 3))
-print('Coefficient of variation: ', round(c, 3))
+print('Population variance: ', round(populationVariance, 3))
+print('Sample variance: ', round(sampleVariance, 3))
+print('Population standard deviation: ', round(populationStardardDeviation, 3))
+print('Sample standard deviation: ', round(sampleStardardDeviation, 3))
+print('Coefficient of variation: ', round(coefficientOfVariation, 3))
