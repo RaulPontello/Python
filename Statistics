@@ -4,20 +4,26 @@
 
 # 1) Input
 
-initialList = [23,33,26,26,28,29,30,31,24]
+initialList = [6392, 51608, 71247, 14271, 48327, 50618, 67435, 47029, 61857, 22987, 64858, 99745, 75504, 85464, 60482, 30320, 11342, 48808, 66882, 40522]
 
 # 2) Output
 
-# 2.1) Initial calculations
+# 2.1) Initial data
 
 sumOfAllElements = 0
 sumOfAllElementsInverted = 0
 productOfAllElements = 1
+countOfElements = []
 
 for i in range(0, len(initialList)):
-    sumOfAllElements += initialList[i]
-    sumOfAllElementsInverted += (1 / initialList[i])
-    productOfAllElements *= initialList[i]
+    sumOfAllElements += initialList[i] # used in Arithimetic mean
+    sumOfAllElementsInverted += (1 / initialList[i]) # used in Harmonic mean
+    productOfAllElements *= initialList[i] # used in Geometric mean
+    countOfElements.append(initialList.count(initialList[i])) # used in mode
+
+countOfAllElements = dict(zip(initialList, countOfElements))
+max_value = max(countOfAllElements.values())
+max_keys = [k for k, v in countOfAllElements.items() if v == max_value]
 
 # 2.2) Arithimetic mean
 
@@ -33,7 +39,7 @@ geometricMean = pow(productOfAllElements, 1 / len(initialList))
 
 # 2.5) Mode
 
-mode = max(set(initialList), key = initialList.count)
+# see item 3
 
 # 2.6) Median
 
@@ -71,7 +77,7 @@ coefficientOfVariation = populationVariance / arithimeticMean
 print('Arithimetic mean: ', round(arithimeticMean, 3))
 print('Harmonic mean: ', round(harmonicMean, 3))
 print('Geometric mean: ', round(geometricMean, 3))
-print('Mode: ', mode)
+print(f'Mode: {max_keys} - {max_value}')
 print('Median: ', median)
 print('Population variance: ', round(populationVariance, 3))
 print('Sample variance: ', round(sampleVariance, 3))
