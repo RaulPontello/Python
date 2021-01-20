@@ -1,10 +1,19 @@
 ## Statistics ##
 # Objective: given a list of numbers, determine mean, mode, stardard deviation,...
-# Python's built in functions cannot be used to determine statistics
+# The following built in functions cannot be used to determine statistics
+
+# import statistics as st
+# print('Arithimetic mean: ', round(st.mean(initialList), 3))
+# print('Harmonic mean: ', round(st.harmonic_mean(initialList), 3))
+# print('Median: ', st.median(initialList))
+# print('Population variance: ', round(st.pvariance(initialList), 3))
+# print('Sample variance: ', round(st.variance(initialList), 3))
+# print('Population standard deviation: ', round(st.pstdev(initialList), 3))
+# print('Sample standard deviation: ', round(st.stdev(initialList), 3))
 
 # 1) Input
 
-initialList = [6392, 51608, 71247, 14271, 48327, 50618, 67435, 47029, 61857, 22987, 64858, 99745, 75504, 85464, 60482, 30320, 11342, 48808, 66882, 40522]
+initialList = [3, 7, 8, 5,12, 14 ,21, 13, 18]
 
 # 2) Output
 
@@ -16,7 +25,7 @@ productOfAllElements = 1
 countOfElements = []
 
 for i in range(0, len(initialList)):
-    sumOfAllElements += initialList[i] # used in Arithimetic mean
+    sumOfAllElements += initialList[i] # used in Arithmetic mean
     sumOfAllElementsInverted += (1 / initialList[i]) # used in Harmonic mean
     productOfAllElements *= initialList[i] # used in Geometric mean
     countOfElements.append(initialList.count(initialList[i])) # used in mode
@@ -25,9 +34,9 @@ countOfAllElements = dict(zip(initialList, countOfElements))
 max_value = max(countOfAllElements.values())
 max_keys = [k for k, v in countOfAllElements.items() if v == max_value]
 
-# 2.2) Arithimetic mean
+# 2.2) Arithmetic mean
 
-arithimeticMean = sumOfAllElements / len(initialList)
+arithmeticMean = sumOfAllElements / len(initialList)
 
 # 2.3) Harmonic mean
 
@@ -43,44 +52,72 @@ geometricMean = pow(productOfAllElements, 1 / len(initialList))
 
 # 2.6) Median
 
-median = 0
+def inf_sup(X):
+    """
+    Function used to slice X into two other lists X_inf and X_sup
+    X_inf is the first hald of X and X_sup is the second half
+    :param X: initial list
+    :return: [X_inf, X_sup]
+    """
+    X_inf = []
+    X_sup = []
 
-if len(initialList) % 2 != 0:
-    median = sorted(initialList)[len(initialList) // 2]
+    if len(X) % 2 != 0:
+        X_inf = sorted(X)[0: len(X) // 2]
+        X_sup = sorted(X)[1 + len(X) // 2: len(X)]
 
-elif len(initialList) % 2 == 0:
-    initialList_inf = sorted(initialList)[0 : len(initialList) // 2]
-    initialList_sup = sorted(initialList)[len(initialList) // 2 : len(initialList)]
-    median = 0.5 * (initialList_inf[len(initialList_inf) - 1] + initialList_sup[0])
+    elif len(X) % 2 == 0:
+        X_inf = sorted(X)[0: len(X) // 2]
+        X_sup = sorted(X)[len(X) // 2: len(X)]
+
+    return [X_inf, X_sup]
+
+def median(X):
+    """
+    Function used to determine de median of X
+    :param X: initial list
+    :return: median
+    """
+    median = 0
+
+    if len(X) % 2 != 0:
+        median = sorted(X)[len(X) // 2]
+
+    elif len(X) % 2 == 0:
+        median = 0.5 * (inf_sup(X)[0][len(inf_sup(X)[0]) - 1] + inf_sup(X)[1][0])
+
+    return median
 
 # 2.7) Variance
 
 averageAbsoluteDeviation = 0
 
 for num in initialList:
-    averageAbsoluteDeviation += pow((num - arithimeticMean), 2)
+    averageAbsoluteDeviation += pow((num - arithmeticMean), 2)
 
 populationVariance = averageAbsoluteDeviation / len(initialList)
 sampleVariance = averageAbsoluteDeviation / (len(initialList) - 1)
 
 # 2.8) Standard deviation
 
-populationStardardDeviation = pow(populationVariance, 0.5)
-sampleStardardDeviation = pow(sampleVariance, 0.5)
+populationStandardDeviation = pow(populationVariance, 0.5)
+sampleStandardDeviation = pow(sampleVariance, 0.5)
 
 # 2.9) Coefficient of variation
 
-coefficientOfVariation = populationVariance / arithimeticMean
+coefficientOfVariation = populationVariance / arithmeticMean
 
 # 3) Results
 
-print('Arithimetic mean: ', round(arithimeticMean, 3))
+print('Arithimetic mean: ', round(arithmeticMean, 3))
 print('Harmonic mean: ', round(harmonicMean, 3))
 print('Geometric mean: ', round(geometricMean, 3))
 print(f'Mode: {max_keys} - {max_value}')
-print('Median: ', median)
+print('First quartile Q1:', median(inf_sup(initialList)[0]))
+print('Median / Second quartile Q2: ', median(initialList))
+print('Third quartile Q3:', median(inf_sup(initialList)[1]))
 print('Population variance: ', round(populationVariance, 3))
 print('Sample variance: ', round(sampleVariance, 3))
-print('Population standard deviation: ', round(populationStardardDeviation, 3))
-print('Sample standard deviation: ', round(sampleStardardDeviation, 3))
+print('Population standard deviation: ', round(populationStandardDeviation, 3))
+print('Sample standard deviation: ', round(sampleStandardDeviation, 3))
 print('Coefficient of variation: ', round(coefficientOfVariation, 3))
