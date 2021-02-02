@@ -1,6 +1,6 @@
 ## Statistics ##
-# Objective: given a list of numbers, determine mean, mode, stardard deviation,...
-# The following built in functions cannot be used to determine statistics
+# Objective: given a list of numbers, determine measures of central tendency and dispersion without any library
+# The following built in functions cannot be used
 
 # import statistics as st
 # print('Arithimetic mean: ', round(st.mean(initialList), 3))
@@ -13,7 +13,7 @@
 
 # 1) Input
 
-initialList = [3, 7, 8, 5,12, 14 ,21, 13, 18]
+initialList = [3, 7, 8, 5, 12, 14, 21, 13, 18, 18]
 
 # 2) Output
 
@@ -25,10 +25,10 @@ productOfAllElements = 1
 countOfElements = []
 
 for i in range(0, len(initialList)):
-    sumOfAllElements += initialList[i] # used in Arithmetic mean
-    sumOfAllElementsInverted += (1 / initialList[i]) # used in Harmonic mean
-    productOfAllElements *= initialList[i] # used in Geometric mean
-    countOfElements.append(initialList.count(initialList[i])) # used in mode
+    sumOfAllElements += initialList[i]  # used in Arithmetic mean
+    sumOfAllElementsInverted += (1 / initialList[i])  # used in Harmonic mean
+    productOfAllElements *= initialList[i]  # used in Geometric mean
+    countOfElements.append(initialList.count(initialList[i]))  # used in mode
 
 countOfAllElements = dict(zip(initialList, countOfElements))
 max_value = max(countOfAllElements.values())
@@ -46,16 +46,17 @@ harmonicMean = len(initialList) / sumOfAllElementsInverted
 
 geometricMean = pow(productOfAllElements, 1 / len(initialList))
 
+
 # 2.5) Mode
 
 # see item 3
 
 # 2.6) Median
 
-def inf_sup(X):
+def quartile(X):
     """
     Function used to slice X into two other lists X_inf and X_sup
-    X_inf is the first hald of X and X_sup is the second half
+    X_inf is the first half of X and X_sup is the second half
     :param X: initial list
     :return: [X_inf, X_sup]
     """
@@ -72,6 +73,7 @@ def inf_sup(X):
 
     return [X_inf, X_sup]
 
+
 def median(X):
     """
     Function used to determine de median of X
@@ -84,11 +86,19 @@ def median(X):
         median = sorted(X)[len(X) // 2]
 
     elif len(X) % 2 == 0:
-        median = 0.5 * (inf_sup(X)[0][len(inf_sup(X)[0]) - 1] + inf_sup(X)[1][0])
+        median = 0.5 * (quartile(X)[0][len(quartile(X)[0]) - 1] + quartile(X)[1][0])
 
     return median
 
-# 2.7) Variance
+
+# 2.7) Quartiles
+
+Q1 = median(quartile(initialList)[0])
+Q2 = median(initialList)
+Q3 = median(quartile(initialList)[1])
+IQR = Q3 - Q1
+
+# 2.8) Variance
 
 averageAbsoluteDeviation = 0
 
@@ -98,12 +108,12 @@ for num in initialList:
 populationVariance = averageAbsoluteDeviation / len(initialList)
 sampleVariance = averageAbsoluteDeviation / (len(initialList) - 1)
 
-# 2.8) Standard deviation
+# 2.9) Standard deviation
 
 populationStandardDeviation = pow(populationVariance, 0.5)
 sampleStandardDeviation = pow(sampleVariance, 0.5)
 
-# 2.9) Coefficient of variation
+# 2.10) Coefficient of variation
 
 coefficientOfVariation = populationVariance / arithmeticMean
 
@@ -113,9 +123,10 @@ print('Arithimetic mean: ', round(arithmeticMean, 3))
 print('Harmonic mean: ', round(harmonicMean, 3))
 print('Geometric mean: ', round(geometricMean, 3))
 print(f'Mode: {max_keys} - {max_value}')
-print('First quartile Q1:', median(inf_sup(initialList)[0]))
-print('Median / Second quartile Q2: ', median(initialList))
-print('Third quartile Q3:', median(inf_sup(initialList)[1]))
+print('First quartile Q1:', Q1)
+print('Median / Second quartile Q2: ', Q2)
+print('Third quartile Q3:', Q3)
+print('Interquartile Range:', IQR)
 print('Population variance: ', round(populationVariance, 3))
 print('Sample variance: ', round(sampleVariance, 3))
 print('Population standard deviation: ', round(populationStandardDeviation, 3))
