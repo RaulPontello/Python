@@ -1,0 +1,85 @@
+# Objective: given two list of numbers, determine the best fitting line using the least square method
+# No modules from Python can be used to perform the least square method
+
+import matplotlib.pyplot as plt
+
+# 1) Input
+
+x = [220, 220, 220, 220, 220, 225, 225, 225, 225, 225, 230, 230, 230, 230, 230, 235, 235, 235, 235, 235]
+y = [137, 137, 137, 136, 135, 135, 133, 132, 133, 133, 128, 124, 126, 129, 126, 122, 122, 122, 119, 122]
+
+# 2) Output
+
+# 2.1) Arithmetic Mean
+
+x_mean = sum(x) / len(x)
+y_mean = sum(y) / len(y)
+
+# 2.2) Variability
+
+Sxx = sum([(i - x_mean) ** 2 for i in x])  # sum of the squares of the difference between each xi and x_mean
+Syy = sum([(i - y_mean) ** 2 for i in y])  # sum of the squares of the difference between each yi and y_mean
+Sxy = sum([(i - x_mean) * (j - y_mean) for i, j in zip(x, y)])  # sum of the product of (xi - x_mean) * (yi - y_mean)
+
+# 2.3) Variance
+
+x_variance = Sxx / len(x)
+y_variance = Syy / len(y)
+
+# 2.4) Standard deviation
+
+x_std = x_variance ** 0.5
+y_std = y_variance ** 0.5
+
+# 2.5) Covariance
+
+Covariance = Sxy / len(y)
+
+# 2.6) Regression line (y = b0 + b1 * x)
+
+b1 = Sxy / Sxx
+b0 = y_mean - b1 * x_mean
+y_predicted = [b0 + b1 * i for i in x]
+
+# 2.7) Sum of squares
+
+totalSumsOfSquares = Syy
+regressionSumsOfSquares = sum([(i - y_mean) ** 2 for i in y_predicted])
+errorSumsOfSquares = sum([(i - j) ** 2 for i, j in zip(y, y_predicted)])
+
+# 2.8) Error estimation
+
+meanSquaredError = errorSumsOfSquares / len(y)
+pearsonCoefficient = Covariance / (x_std * y_std)
+R_squared = regressionSumsOfSquares / totalSumsOfSquares
+R_squared_adjusted = 1 - (1 - R_squared) * (len(y) - 1) / (len(y) - 2)
+
+# 3) Plotting
+
+plt.scatter(x, y)
+fig = plt.plot(x, y_predicted, lw=4, c='orange', label='regression line')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
+
+# 4) Results
+
+print('x_mean = ', x_mean)
+print('x_variance = ', x_variance)
+print('x_std = ', x_std)
+print('y_mean = ', y_mean)
+print('y_variance = ', y_variance)
+print('y_std = ', y_std)
+print('Sxx = ', Sxx)
+print('Syy = ', Syy)
+print('Sxy = ', Sxy)
+print('Covariance = ', Covariance)
+print('b0 = ', b0)
+print('b1 = ', b1)
+print('SST = ', totalSumsOfSquares)
+print('SSR = ', regressionSumsOfSquares)
+print('SSE = ', errorSumsOfSquares)
+print('MSE = ', meanSquaredError)
+print('Pearson correlation coefficient = ', pearsonCoefficient)
+print('R_squared = ', R_squared)
+print('R_squared_adjusted = ', R_squared_adjusted)
