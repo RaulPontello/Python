@@ -58,7 +58,7 @@ meanSquaredError = sumsOfSquaresError / n # MSE
 rootMeanSquaredError = meanSquaredError ** 0.5 # RMSE
 meanAbsoluteError = sumsOfAbsolutesError / n # MAE
 pearsonCoefficient = Covariance / (x_std * y_std)
-R_squared = (Syy - sumsOfSquaresError) / Syy
+R_squared = (sumsOfSquaresRegression) / Syy
 R_squared_adjusted = 1 - (1 - R_squared) * (n - 1) / (n - 2)
 
 # 3) Plotting
