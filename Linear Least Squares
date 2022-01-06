@@ -1,13 +1,11 @@
-# Objective: given two list of numbers, determine the best fitting line using the least square method
-# No modules from Python can be used to perform the least square method
-
-import matplotlib.pyplot as plt
-
 # 1) Input
 
 x = [220, 220, 220, 220, 220, 225, 225, 225, 225, 225, 230, 230, 230, 230, 230, 235, 235, 235, 235, 235]
 y = [137, 137, 137, 136, 135, 135, 133, 132, 133, 133, 128, 124, 126, 129, 126, 122, 122, 122, 119, 122]
 
+
+
+import matplotlib.pyplot as plt
 # 2) Output
 
 # 2.0) Lenght
@@ -47,19 +45,21 @@ y_predicted = [b0 + b1 * i for i in x]
 
 # 2.7) Sum of squares
 
-residualSumsOfSquares = sum([(i - j) ** 2 for i, j in zip(y, y_predicted)])
-residualSumsOfAbsolutes = sum([abs(i - j) for i, j in zip(y, y_predicted)])
-residualStandardError = (residualSumsOfSquares / (n - 2)) ** 0.5
+sumsOfSquaresTotal = Syy # SST
+sumsOfSquaresRegression = sum([(i - y_mean) ** 2 for i in y_predicted]) # SSR
+sumsOfSquaresError = sum([(i - j) ** 2 for i, j in zip(y, y_predicted)]) # SSE or RSS
+sumsOfAbsolutesError = sum([abs(i - j) for i, j in zip(y, y_predicted)]) # SSA
+residualStandardError = (sumsOfSquaresError / (n - 2)) ** 0.5
 
 # 2.8) Error estimation
 
 standardError_b0 = residualStandardError * ((1 / n) + ((x_mean ** 2) / Sxx))
 standardError_b1 = residualStandardError / Sxx
-meanSquaredError = residualSumsOfSquares / n
-rootMeanSquaredError = meanSquaredError ** 0.5
-meanAbsoluteError = residualSumsOfAbsolutes / n
+meanSquaredError = sumsOfSquaresError / n # MSE
+rootMeanSquaredError = meanSquaredError ** 0.5 # RMSE
+meanAbsoluteError = sumsOfAbsolutesError / n # MAE
 pearsonCoefficient = Covariance / (x_std * y_std)
-R_squared = (Syy - residualSumsOfSquares) / Syy
+R_squared = (Syy - sumsOfSquaresError) / Syy
 R_squared_adjusted = 1 - (1 - R_squared) * (n - 1) / (n - 2)
 
 # 3) Plotting
@@ -84,15 +84,19 @@ print('Sxy = ', Sxy)
 print('Covariance = ', Covariance)
 print('b0 = ', b0)
 print('b1 = ', b1)
-print('RSS (Residual Sum of Squares) = ', residualSumsOfSquares)
-print('RSA (Residual Sum of Absolutes) = ', residualSumsOfAbsolutes)
-print('RSE (Residual Standard Error) = ', residualStandardError)
-print('standardError_b0 = ', standardError_b0)
-print('standardError_b1 = ', standardError_b1)
-print('MSE (Mean Squared Error) = ', meanSquaredError)
-print('RMSE (Root Mean Squared Error) = ', rootMeanSquaredError)
-print('MAE (Mean Absolute Error) = ', meanAbsoluteError)
+print('Sum of Squares Total = ', Syy)
+print('Sum of Squares Regression = ', sumsOfSquaresRegression)
+print('Sum of Squares Error = ', sumsOfSquaresError)
+print('Sum of Absolutes Error = ', sumsOfAbsolutesError)
+print('Residual Standard Error = ', residualStandardError)
+print('Standard Error b0 = ', standardError_b0)
+print('Standard Error b1 = ', standardError_b1)
+print('Mean Squared Error = ', meanSquaredError)
+print('Root Mean Squared Error = ', rootMeanSquaredError)
+print('Mean Absolute Error = ', meanAbsoluteError)
 print('Pearson correlation coefficient = ', pearsonCoefficient)
 print('R_squared = ', R_squared)
 print('R_squared_adjusted = ', R_squared_adjusted)
+
+
 
