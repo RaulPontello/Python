@@ -10,10 +10,14 @@ y = [137, 137, 137, 136, 135, 135, 133, 132, 133, 133, 128, 124, 126, 129, 126, 
 
 # 2) Output
 
+# 2.0) Lenght
+
+n = len(x) 
+
 # 2.1) Arithmetic Mean
 
-x_mean = sum(x) / len(x)
-y_mean = sum(y) / len(y)
+x_mean = sum(x) / n
+y_mean = sum(y) / n
 
 # 2.2) Variability
 
@@ -23,8 +27,8 @@ Sxy = sum([(i - x_mean) * (j - y_mean) for i, j in zip(x, y)])  # sum of the pro
 
 # 2.3) Variance
 
-x_variance = Sxx / len(x)
-y_variance = Syy / len(y)
+x_variance = Sxx / n
+y_variance = Syy / n
 
 # 2.4) Standard deviation
 
@@ -33,7 +37,7 @@ y_std = y_variance ** 0.5
 
 # 2.5) Covariance
 
-Covariance = Sxy / len(y)
+Covariance = Sxy / n
 
 # 2.6) Regression line (y = b0 + b1 * x)
 
@@ -43,16 +47,20 @@ y_predicted = [b0 + b1 * i for i in x]
 
 # 2.7) Sum of squares
 
-totalSumsOfSquares = Syy
-regressionSumsOfSquares = sum([(i - y_mean) ** 2 for i in y_predicted])
-errorSumsOfSquares = sum([(i - j) ** 2 for i, j in zip(y, y_predicted)])
+residualSumsOfSquares = sum([(i - j) ** 2 for i, j in zip(y, y_predicted)])
+residualSumsOfAbsolutes = sum([abs(i - j) for i, j in zip(y, y_predicted)])
+residualStandardError = (residualSumsOfSquares / (n - 2)) ** 0.5
 
 # 2.8) Error estimation
 
-meanSquaredError = errorSumsOfSquares / len(y)
+standardError_b0 = residualStandardError * ((1 / n) + ((x_mean ** 2) / Sxx))
+standardError_b1 = residualStandardError / Sxx
+meanSquaredError = residualSumsOfSquares / n
+rootMeanSquaredError = meanSquaredError ** 0.5
+meanAbsoluteError = residualSumsOfAbsolutes / n
 pearsonCoefficient = Covariance / (x_std * y_std)
-R_squared = regressionSumsOfSquares / totalSumsOfSquares
-R_squared_adjusted = 1 - (1 - R_squared) * (len(y) - 1) / (len(y) - 2)
+R_squared = (Syy - residualSumsOfSquares) / Syy
+R_squared_adjusted = 1 - (1 - R_squared) * (n - 1) / (n - 2)
 
 # 3) Plotting
 
@@ -76,10 +84,15 @@ print('Sxy = ', Sxy)
 print('Covariance = ', Covariance)
 print('b0 = ', b0)
 print('b1 = ', b1)
-print('SST = ', totalSumsOfSquares)
-print('SSR = ', regressionSumsOfSquares)
-print('SSE = ', errorSumsOfSquares)
-print('MSE = ', meanSquaredError)
+print('RSS (Residual Sum of Squares) = ', residualSumsOfSquares)
+print('RSA (Residual Sum of Absolutes) = ', residualSumsOfAbsolutes)
+print('RSE (Residual Standard Error) = ', residualStandardError)
+print('standardError_b0 = ', standardError_b0)
+print('standardError_b1 = ', standardError_b1)
+print('MSE (Mean Squared Error) = ', meanSquaredError)
+print('RMSE (Root Mean Squared Error) = ', rootMeanSquaredError)
+print('MAE (Mean Absolute Error) = ', meanAbsoluteError)
 print('Pearson correlation coefficient = ', pearsonCoefficient)
 print('R_squared = ', R_squared)
 print('R_squared_adjusted = ', R_squared_adjusted)
+
