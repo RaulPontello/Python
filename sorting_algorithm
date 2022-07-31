@@ -1,4 +1,4 @@
-# This project studies and compares sorting algorithm
+# This project studies and compares sorting algorithms
 
 def bubble_sort(array: list, ascending = True) -> list: 
     '''
