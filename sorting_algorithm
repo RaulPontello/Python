@@ -5,7 +5,6 @@ import time
 def bubble_sort(array: list, ascending = True) -> tuple: 
     '''
     1) Definition: Function to sort an array using the Bubble Method
-    Bubble Method compares two adjacent elements and swaps them until they are in the intended order
     
     2) Input: 
         array: List of element we need to sort
@@ -16,7 +15,7 @@ def bubble_sort(array: list, ascending = True) -> tuple:
                execution_time: Time needed in seconds to sort the array
                
     4) Complexity: Time - O(n²), Space - O(1)
-'''
+    '''
     
     start_time = time.time()
     steps = 0
@@ -38,8 +37,6 @@ def bubble_sort(array: list, ascending = True) -> tuple:
 def selection_sort(array: list, ascending = True) -> tuple: 
     '''
     1) Definition: Function to sort an array using the Selection Method
-    Bubble Method selects the smallest element from an unsorted list in each 
-    iteration and places that element at the beginning of the unsorted list
     
     2) Input: 
         array: List of element we need to sort
@@ -50,7 +47,7 @@ def selection_sort(array: list, ascending = True) -> tuple:
                execution_time: Time needed in seconds to sort the array
                
     4) Complexity: Time - O(n²), Space - O(1)
-'''
+    '''
 
     start_time = time.time()
     steps = 0
@@ -72,3 +69,4 @@ def selection_sort(array: list, ascending = True) -> tuple:
 
     execution_time = time.time() - start_time
     return array, steps, execution_time
+    
