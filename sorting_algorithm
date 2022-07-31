@@ -36,9 +36,7 @@ def bubble_sort(array: list, ascending = True) -> tuple:
                 test = array[index] < array[index + 1]
                 
             if test:
-                after = array[index + 1]
-                array[index + 1] = array[index]
-                array[index] = after 
+                (array[index], array[index + 1]) = (array[index + 1], array[index])
                 steps += 1
                 
     execution_time = time.time() - start_time
