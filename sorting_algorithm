@@ -16,13 +16,6 @@ def bubble_sort(array: list, ascending = True) -> tuple:
                execution_time: Time needed in seconds to sort the array
                
     4) Complexity: Time - O(n²), Space - O(1)
-    
-    5) Example
-        initial array - [2, -2, 10, -8]
-        1° iteration -  [-2, 2, 10, -8]
-        2° iteration -  [-2, 2, -8, 10]
-        3° iteration -  [-2, -8, 2, 10]
-        4° iteration -  [-8, -2, 2, 10]
 '''
     
     start_time = time.time()
@@ -57,12 +50,6 @@ def selection_sort(array: list, ascending = True) -> tuple:
                execution_time: Time needed in seconds to sort the array
                
     4) Complexity: Time - O(n²), Space - O(1)
-    
-    5) Example
-        initial array - [2, -2, 10, -8]
-        1° iteration -  [-8, -2, 10, 2]
-        2° iteration -  [-8, -2, 10, 2]
-        3° iteration -  [-8, -2, 2, 10]
 '''
 
     start_time = time.time()
