@@ -1,0 +1,25 @@
+# This project studies and compares sorting algorithm
+
+def bubble_sort(array: list, ascending = True) -> list: 
+    '''
+    1) Definition: Function to sort an array using the Bubble Method
+    Bubble Method compares two adjacent elements and swaps them until they are in the intended order
+    
+    2) Input: 
+        array: List of element we need to sort
+        ascending: True (sort in ascending order), False (sort in descending order)
+        
+    3) Output: The input variable array, now sorted, is the output
+    
+    4) Complexity: Time - O(n²), Space - O(1)
+    '''
+    
+    for i in range(1, len(array)):
+        for index in range(0, len(array) - i):
+            test = (array[index] > array[index + 1] if ascending 
+                    else array[index] < array[index + 1])
+            if test:
+                after = array[index + 1]
+                array[index + 1] = array[index]
+                array[index] = after 
+    return array
