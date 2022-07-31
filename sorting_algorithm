@@ -10,16 +10,24 @@ def bubble_sort(array: list, ascending = True) -> list:
         ascending: True (sort in ascending order), False (sort in descending order)
         
     3) Output: The input variable array, now sorted, is the output
+               steps: Number of alterations in array
     
     4) Complexity: Time - O(n²), Space - O(1)
     '''
     
+    steps = 0
+    
     for i in range(1, len(array)):
-        for index in range(0, len(array) - i):
-            test = (array[index] > array[index + 1] if ascending 
-                    else array[index] < array[index + 1])
+        for index in range(0, len(array) - i):   
+            if ascending:
+                test = array[index] > array[index + 1]  
+            else:
+                test = array[index] < array[index + 1]
+                
             if test:
                 after = array[index + 1]
                 array[index + 1] = array[index]
                 array[index] = after 
-    return array
+                steps += 1
+                
+    return array, steps
