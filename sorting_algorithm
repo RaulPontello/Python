@@ -1,9 +1,8 @@
 # This project studies and compares sorting algorithms
 
 import time
-from typing import Tuple
 
-def bubble_sort(array: list, ascending = True) -> Tuple[list, int, float]: 
+def bubble_sort(array: list, ascending = True) -> tuple: 
     '''
     1) Definition: Function to sort an array using the Bubble Method
     Bubble Method compares two adjacent elements and swaps them until they are in the intended order
@@ -17,7 +16,14 @@ def bubble_sort(array: list, ascending = True) -> Tuple[list, int, float]:
                execution_time: Time needed in seconds to sort the array
                
     4) Complexity: Time - O(n²), Space - O(1)
-    '''
+    
+    5) Example
+        initial array - [2, -2, 10, -8]
+        1° iteration -  [-2, 2, 10, -8]
+        2° iteration -  [-2, 2, -8, 10]
+        3° iteration -  [-2, -8, 2, 10]
+        4° iteration -  [-8, -2, 2, 10]
+'''
     
     start_time = time.time()
     steps = 0
@@ -35,5 +41,49 @@ def bubble_sort(array: list, ascending = True) -> Tuple[list, int, float]:
                 array[index] = after 
                 steps += 1
                 
+    execution_time = time.time() - start_time
+    return array, steps, execution_time
+    
+def selection_sort(array: list, ascending = True) -> tuple: 
+    '''
+    1) Definition: Function to sort an array using the Selection Method
+    Bubble Method selects the smallest element from an unsorted list in each 
+    iteration and places that element at the beginning of the unsorted list
+    
+    2) Input: 
+        array: List of element we need to sort
+        ascending: True (sort in ascending order), False (sort in descending order)
+        
+    3) Output: The input variable array, now sorted, is the output
+               steps: Number of alterations in array
+               execution_time: Time needed in seconds to sort the array
+               
+    4) Complexity: Time - O(n²), Space - O(1)
+    
+    5) Example
+        initial array - [2, -2, 10, -8]
+        1° iteration -  [-8, -2, 10, 2]
+        2° iteration -  [-8, -2, 10, 2]
+        3° iteration -  [-8, -2, 2, 10]
+'''
+
+    start_time = time.time()
+    steps = 0
+    
+    for i in range(0, len(array) - 1):
+        index = i
+    
+        for j in range(i, len(array)):   
+            if ascending:
+                test = array[index] > array[j] 
+            else:
+                test = array[index] < array[j]
+                
+            if test:
+                index = j
+    
+        (array[i], array[index]) = (array[index], array[i])
+        steps += 1
+
     execution_time = time.time() - start_time
     return array, steps, execution_time
